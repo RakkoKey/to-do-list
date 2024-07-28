@@ -54,6 +54,11 @@ class toDoItem{
 class project{
     constructor(projectTitle){
         this.projectTitle = projectitle;
+        const tasks = [];
+    }
+
+    addTask(newItem){
+        tasks.push(newItem);
     }
 }
 
@@ -69,7 +74,16 @@ const toDoItemHandler = (function(){
         project.addTask(newItem);
     }
 
-
+    const completeItem = function(item){
+        item.setCompleted(true);
+    }
+    const uncompleteItem = function(item){
+        item.setCompleted(false);
+    }
+    const deleteItem = function(item){
+        item = null;
+    }
+    return{addItemToProject, completeItem, uncompleteItem};
 })();
 
 console.log("Hello!");
