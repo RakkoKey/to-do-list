@@ -45,7 +45,7 @@ class toDoItem{
     printItem(){
         console.log(this.title);
         console.log(this.description);
-        console.log("Due Date: " + this.date);
+        console.log("Due Date: " + this.dueDate);
 
     }
 
@@ -53,27 +53,18 @@ class toDoItem{
 
 class project{
     constructor(projectTitle){
-        this.projectTitle = projectitle;
-        const tasks = [];
+        this.projectTitle = projectTitle;
+        
+        this.tasks = [];
     }
-
+    
     addTask(newItem){
-        tasks.push(newItem);
+        this.tasks.push(newItem);
     }
 }
 
 
 const toDoItemHandler = (function(){
-    const addItemToProject = function(project){
-        var title =  prompt("Title: ");
-        var description = prompt("Description: ");
-        var dueDate = prompt("dueDate");
-        var priority = prompt("Priority");
-
-        var newItem = toDoItem(title, description, dueDate, priority);
-        project.addTask(newItem);
-    }
-
     const completeItem = function(item){
         item.setCompleted(true);
     }
@@ -83,7 +74,51 @@ const toDoItemHandler = (function(){
     const deleteItem = function(item){
         item = null;
     }
-    return{addItemToProject, completeItem, uncompleteItem};
+    return{ completeItem, uncompleteItem, deleteItem};
 })();
 
+const projectHandler = (function(){
+    const removeItemFromProject = function(toDoItem){
+        toDoItem = null;
+    }
+
+    const addItemToProject = function(project){
+        var title =  prompt("Title: ");
+        var description = prompt("Description: ");
+        var dueDate = prompt("dueDate");
+        var priority = prompt("Priority");
+
+        var newItem = new toDoItem(title, description, dueDate, priority);
+        project.addTask(newItem);
+    }
+    return{removeItemFromProject,addItemToProject}
+})();
+
+
 console.log("Hello!");
+
+var sampleProject = new project("Sample");
+/*
+toDoItemHandler.addItemToProject(sampleProject);
+for(let i = 0; i < sampleProject.tasks.length; i++){
+    sampleProject.tasks[i].printItem();
+}
+*/
+var loop = true;
+var projects = []
+while(loop){
+    let enter = prompt("Enter a project name: ");
+    var newProject = new project(enter);
+    projects.push(newProject);
+
+    let addNew = prompt("Would you like to add a new to-do item?: ");
+    if(addNew == "No"){
+        break;
+    }else if(addNew == "Yes"){
+        projectHandler.addItemToProject(newProject);
+        break;
+    }
+}
+
+
+
