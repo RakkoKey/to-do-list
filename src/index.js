@@ -61,6 +61,17 @@ class project{
     addTask(newItem){
         this.tasks.push(newItem);
     }
+    getTitle(){
+        return this.projectTitle;
+    }
+    setTitle(newTitle){
+        this.projectTitle = newTitle;
+    }
+
+    getTasks(){
+        return this.tasks;
+    }
+    
 }
 
 
@@ -76,10 +87,18 @@ const toDoItemHandler = (function(){
     }
     return{ completeItem, uncompleteItem, deleteItem};
 })();
-
+//The projectHandler deals with creating new projects, removing items from a project, and adding items to a project
 const projectHandler = (function(){
+    
+    const projects = [];
+    
+    const createNewProject = function(title){
+        projects.push(new project(title));
+    }
+
+
     const removeItemFromProject = function(toDoItem){
-        toDoItem = null;
+        toDoItemHandler.deleteItem(toDoItem);
     }
 
     const addItemToProject = function(project){
@@ -91,21 +110,24 @@ const projectHandler = (function(){
         var newItem = new toDoItem(title, description, dueDate, priority);
         project.addTask(newItem);
     }
-    return{removeItemFromProject,addItemToProject}
+
+    const getAllProjects = function(){
+        return this.projects;
+    }
+
+    return{getAllProjects, createNewProject,removeItemFromProject,addItemToProject}
 })();
 
+//console.log("Hello!");
 
-console.log("Hello!");
-
-var sampleProject = new project("Sample");
 /*
 toDoItemHandler.addItemToProject(sampleProject);
 for(let i = 0; i < sampleProject.tasks.length; i++){
     sampleProject.tasks[i].printItem();
 }
 */
-var loop = true;
-var projects = []
+
+/*
 while(loop){
     let enter = prompt("Enter a project name: ");
     var newProject = new project(enter);
@@ -119,6 +141,8 @@ while(loop){
         break;
     }
 }
+*/
+export {toDoItem as ItemClass ,project as ProjectClass,toDoItemHandler,projectHandler};
 
 
 
