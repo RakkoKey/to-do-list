@@ -101,12 +101,7 @@ const projectHandler = (function(){
         toDoItemHandler.deleteItem(toDoItem);
     }
 
-    const addItemToProject = function(project){
-        var title =  prompt("Title: ");
-        var description = prompt("Description: ");
-        var dueDate = prompt("dueDate");
-        var priority = prompt("Priority");
-
+    const addItemToProject = function(project, title, description, dueDate, priority){
         var newItem = new toDoItem(title, description, dueDate, priority);
         project.addTask(newItem);
     }
@@ -115,7 +110,7 @@ const projectHandler = (function(){
         return this.projects;
     }
 
-    return{getAllProjects, createNewProject,removeItemFromProject,addItemToProject}
+    return{projects, getAllProjects, createNewProject,removeItemFromProject,addItemToProject}
 })();
 
 //console.log("Hello!");
