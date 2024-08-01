@@ -1,6 +1,6 @@
 import * as handler from "./index.js"
 
-const contentDiv = document.getElementById('allprojects')
+const contentDiv = document.getElementById('allprojects');
 
 const createProjectDiv = function(project){
     //stores project info
@@ -9,6 +9,7 @@ const createProjectDiv = function(project){
     var projectTitle = document.createElement('h2');
     projectTitle.innerHTML = project.getTitle();
     //load tasks
+    projectDiv.appendChild(projectTitle);
     for(let i = 0; i < project.tasks.length; i++){
         var newTaskElement = document.createElement('div');
         var newTaskTitle = document.createElement('h4');
@@ -19,10 +20,14 @@ const createProjectDiv = function(project){
         newTaskDescription.innerHTML = project.tasks[i].getDescription();
         newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
 
-        newTaskElement.appendChild(newTaskTitle, newTaskDescription, newTaskDueDate);
+        
+
+        newTaskElement.appendChild(newTaskTitle);
+        newTaskElement.appendChild(newTaskDescription);
+        newTaskElement.appendChild(newTaskDueDate);
         projectDiv.appendChild(newTaskElement);
     }
-    projectDiv.appendChild(projectTitle);
+    
 
     return projectDiv;
 }
@@ -31,14 +36,22 @@ const toDoListUIHandler = (function(){
     const loadProjects = function(projectList){
         //load a project and all it's todo items
         var numProjects = projectList.length;
-        for(let i = 0; i < numProjects; i++){
-            var newProjectDiv = createProjectDiv();
-            
+        console.log(numProjects);
+        if(numProjects == 0){
+            contentDiv.innerHTML = "There are no projects at this time";
+            return;
         }
-
-
+        for(let i = 0; i < numProjects; i++){
+            var newProjectDiv = createProjectDiv(projectList[i]);
+            contentDiv.appendChild(newProjectDiv);
+        }
         
     }
+    return {loadProjects};
 })();
 console.log("Hello!");
-//let handler = new logicHandler();
+//test code
+handler.projectHandler.createNewProject("Test Project Title");
+var sampleProject = handler.projectHandler.getAllProjects()[0];
+handler.projectHandler.addItemToProject(sampleProject, "Test Item", "This is a test description.", "Never", "4")
+toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());
