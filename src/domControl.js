@@ -1,10 +1,14 @@
 import * as handler from "./index.js"
+import "./style.scss";
 
 const contentDiv = document.getElementById('allprojects');
 
 const createProjectDiv = function(project){
     //stores project info
     var projectDiv = document.createElement('div');
+    projectDiv.classList.add("project");
+
+
     
     var projectTitle = document.createElement('h2');
     projectTitle.innerHTML = project.getTitle();
@@ -22,9 +26,7 @@ const createProjectDiv = function(project){
 
         
 
-        newTaskElement.appendChild(newTaskTitle);
-        newTaskElement.appendChild(newTaskDescription);
-        newTaskElement.appendChild(newTaskDueDate);
+        newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate);
         projectDiv.appendChild(newTaskElement);
     }
     
