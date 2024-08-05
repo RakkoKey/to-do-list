@@ -2,6 +2,38 @@ import * as handler from "./index.js"
 import "./style.scss";
 
 const contentDiv = document.getElementById('allprojects');
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const editForm = document.getElementById('editForm');
+const closeModalBtn = document.querySelector(".btn-close");
+
+// class projectDom extends handler.ProjectClass{
+//     constructor(title){
+//         handler.projectHandler.createNewProject(title);
+//         this.toDoListItems = [];
+//     }
+// }
+
+
+const openModal = function () {
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+};
+const closeModal = function () {
+    modal.classList.add("hidden");
+    overlay.classList.add("hidden");
+};
+
+const editFunc = function(index){
+    openModal();
+    editForm.addEventListener("submit", function(e){
+    
+        e.preventDefault();
+        const data = new FormData(e.target);
+        var item = findtoDoItem(project, index);
+        
+    })
+}
 
 const createProjectDiv = function(project){
     //stores project info
@@ -32,6 +64,10 @@ const createProjectDiv = function(project){
         var editButton = document.createElement('button');
         editButton.setAttribute('id', "edit");
         editButton.innerHTML = "Edit";
+        editButton.addEventListener('click', editFunc)
+
+
+
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute('id', 'delete');
         deleteButton.innerHTML = "Delete";
@@ -48,6 +84,8 @@ const createProjectDiv = function(project){
         
 
         newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate, buttonDiv);
+        project.tasksDom.push(newTaskElement);
+        
         projectDiv.appendChild(newTaskElement);
     }
     
@@ -72,9 +110,18 @@ const toDoListUIHandler = (function(){
     }
     return {loadProjects};
 })();
-console.log("Hello!");
+
+const findtoDoItem = function(project, index){
+    return project.tasks[index];
+}
+
+closeModalBtn.addEventListener('click', closeModal);
+
+
+
+
 //test code
 handler.projectHandler.createNewProject("Test Project Title");
 var sampleProject = handler.projectHandler.getAllProjects()[0];
-handler.projectHandler.addItemToProject(sampleProject, "Test Item", "This is a test description.", "Never", "4")
+sampleProject.addItemToProject("Test title", "Test description", "Never", 4);
 toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());

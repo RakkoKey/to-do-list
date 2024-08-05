@@ -56,6 +56,7 @@ class project{
         this.projectTitle = projectTitle;
         
         this.tasks = [];
+        this.tasksDom = [];
     }
     
     addTask(newItem){
@@ -71,6 +72,16 @@ class project{
     getTasks(){
         return this.tasks;
     }
+
+    removeItemFromProject(toDoItem){
+        toDoItemHandler.deleteItem(toDoItem);
+    }
+
+    addItemToProject( title, description, dueDate, priority){
+        var newItem = new toDoItem(title, description, dueDate, priority);
+        this.addTask(newItem);
+    }
+
     
 }
 
@@ -97,20 +108,20 @@ const projectHandler = (function(){
     }
 
 
-    const removeItemFromProject = function(toDoItem){
-        toDoItemHandler.deleteItem(toDoItem);
-    }
+    // const removeItemFromProject = function(toDoItem){
+    //     toDoItemHandler.deleteItem(toDoItem);
+    // }
 
-    const addItemToProject = function(project, title, description, dueDate, priority){
-        var newItem = new toDoItem(title, description, dueDate, priority);
-        project.addTask(newItem);
-    }
+    // const addItemToProject = function(project, title, description, dueDate, priority){
+    //     var newItem = new toDoItem(title, description, dueDate, priority);
+    //     project.addTask(newItem);
+    // }
 
     const getAllProjects = function(){
         return this.projects;
     }
 
-    return{projects, getAllProjects, createNewProject,removeItemFromProject,addItemToProject}
+    return{projects, getAllProjects, createNewProject}
 })();
 
 //console.log("Hello!");
