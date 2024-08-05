@@ -24,9 +24,30 @@ const createProjectDiv = function(project){
         newTaskDescription.innerHTML = project.tasks[i].getDescription();
         newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
 
+        //create buttons
+        var buttonDiv = document.createElement('div');
+        buttonDiv.setAttribute('id', "toDoButtons");
+
+
+        var editButton = document.createElement('button');
+        editButton.setAttribute('id', "edit");
+        editButton.innerHTML = "Edit";
+        var deleteButton = document.createElement('button');
+        deleteButton.setAttribute('id', 'delete');
+        deleteButton.innerHTML = "Delete";
+        var completeButton = document.createElement('button');
+        completeButton.setAttribute('id', "complete");
+        completeButton.innerHTML = "Complete";
+
+
+        buttonDiv.append(editButton, deleteButton, completeButton);
+
+
+
+
         
 
-        newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate);
+        newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate, buttonDiv);
         projectDiv.appendChild(newTaskElement);
     }
     
