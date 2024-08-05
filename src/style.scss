@@ -3,6 +3,55 @@ body{
     font-family: 'Roboto';
     display:flex;
     flex-direction: column;
+    
+    .modal{
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.4rem;
+        width: 450px;
+        padding: 1.3rem;
+        min-height: 250px;
+        position: absolute;
+        top: 20%;
+        background-color: white;
+        border: 1px solid #ddd;
+        border-radius: 15px;
+        .flex{
+            display:flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        input{
+            padding: 0.7rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+        p{
+            font-size: 0.9rem;
+            color: #777;
+            margin: 0.4rem 0 0.2rem;
+        }
+    
+          
+    }
+    button{
+        cursor: pointer;
+        border:none;
+        font-weight:600;
+    }
+
+
+
+
+
+
+    
+    .hidden{
+        display: none;
+    }
     h1{
         display:flex;
         justify-content: center;
