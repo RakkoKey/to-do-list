@@ -24,15 +24,21 @@ const closeModal = function () {
     overlay.classList.add("hidden");
 };
 
-const editFunc = function(item, i){
+const editFunc = function(project, i){
     openModal();
     editForm.addEventListener("submit", function onClick(e){
-        console.log("hi");
+        
         e.preventDefault();
         const data = new FormData(e.target);
         if(data.get("title")){
-            item.childNodes[0].innerHTML = data.get("title");
+            project.tasksDom[i].childNodes[0].innerHTML = data.get("title");
+            project.tasks[i].setTitle(data.get("title"));
+            console.log(project.tasks[i]);
             
+        }
+        if(data.get("description")){
+            project.tasksDom[i].childNodes[1].innerHTML = data.get("description");
+            project.tasks[i].setDescription(data.get("description"));
         }
         closeModal();
         this.removeEventListener("submit", onClick);
@@ -71,7 +77,7 @@ const createProjectDiv = function(project){
         editButton.innerHTML = "Edit";
         editButton.addEventListener('click', function(){
             
-            editFunc(project.tasksDom[i], i);
+            editFunc(project, i);
         })
 
 
