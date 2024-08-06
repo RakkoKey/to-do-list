@@ -24,13 +24,18 @@ const closeModal = function () {
     overlay.classList.add("hidden");
 };
 
-const editFunc = function(index){
+const editFunc = function(item, i){
     openModal();
-    editForm.addEventListener("submit", function(e){
-    
+    editForm.addEventListener("submit", function onClick(e){
+        console.log("hi");
         e.preventDefault();
         const data = new FormData(e.target);
-        var item = findtoDoItem(project, index);
+        if(data.get("title")){
+            item.childNodes[0].innerHTML = data.get("title");
+            
+        }
+        closeModal();
+        this.removeEventListener("submit", onClick);
         
     })
 }
@@ -64,7 +69,10 @@ const createProjectDiv = function(project){
         var editButton = document.createElement('button');
         editButton.setAttribute('id', "edit");
         editButton.innerHTML = "Edit";
-        editButton.addEventListener('click', editFunc)
+        editButton.addEventListener('click', function(){
+            
+            editFunc(project.tasksDom[i], i);
+        })
 
 
 
@@ -82,11 +90,12 @@ const createProjectDiv = function(project){
 
 
         
-
+        
         newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate, buttonDiv);
         project.tasksDom.push(newTaskElement);
         
         projectDiv.appendChild(newTaskElement);
+        console.log(project.tasksDom);
     }
     
 
