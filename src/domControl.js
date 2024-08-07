@@ -45,11 +45,18 @@ const editFunc = function(project, i){
         
     })
 }
+const deleteFunc = function(project, i){
+    project.removeItemFromProject(project, i);
+    console.log( project.tasks);
+    project.tasksDom[i].remove();
+    console.log(project.tasksDom);
+}
 
 const createProjectDiv = function(project){
     //stores project info
     var projectDiv = document.createElement('div');
     projectDiv.classList.add("project");
+
 
 
     
@@ -85,6 +92,12 @@ const createProjectDiv = function(project){
         var deleteButton = document.createElement('button');
         deleteButton.setAttribute('id', 'delete');
         deleteButton.innerHTML = "Delete";
+        deleteButton.addEventListener('click', function(){
+            deleteFunc(project, i);
+        })
+
+
+
         var completeButton = document.createElement('button');
         completeButton.setAttribute('id', "complete");
         completeButton.innerHTML = "Complete";
@@ -139,4 +152,5 @@ closeModalBtn.addEventListener('click', closeModal);
 handler.projectHandler.createNewProject("Test Project Title");
 var sampleProject = handler.projectHandler.getAllProjects()[0];
 sampleProject.addItemToProject("Test title", "Test description", "Never", 4);
+sampleProject.addItemToProject("Test title 2", "Test description 2", "Never 2", 4);
 toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());

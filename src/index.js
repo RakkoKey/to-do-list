@@ -73,8 +73,8 @@ class project{
         return this.tasks;
     }
 
-    removeItemFromProject(toDoItem){
-        toDoItemHandler.deleteItem(toDoItem);
+    removeItemFromProject(project, i){
+        delete project.tasks[i];
     }
 
     addItemToProject( title, description, dueDate, priority){
@@ -108,15 +108,6 @@ const projectHandler = (function(){
     }
 
 
-    // const removeItemFromProject = function(toDoItem){
-    //     toDoItemHandler.deleteItem(toDoItem);
-    // }
-
-    // const addItemToProject = function(project, title, description, dueDate, priority){
-    //     var newItem = new toDoItem(title, description, dueDate, priority);
-    //     project.addTask(newItem);
-    // }
-
     const getAllProjects = function(){
         return this.projects;
     }
@@ -124,30 +115,7 @@ const projectHandler = (function(){
     return{projects, getAllProjects, createNewProject}
 })();
 
-//console.log("Hello!");
 
-/*
-toDoItemHandler.addItemToProject(sampleProject);
-for(let i = 0; i < sampleProject.tasks.length; i++){
-    sampleProject.tasks[i].printItem();
-}
-*/
-
-/*
-while(loop){
-    let enter = prompt("Enter a project name: ");
-    var newProject = new project(enter);
-    projects.push(newProject);
-
-    let addNew = prompt("Would you like to add a new to-do item?: ");
-    if(addNew == "No"){
-        break;
-    }else if(addNew == "Yes"){
-        projectHandler.addItemToProject(newProject);
-        break;
-    }
-}
-*/
 export {toDoItem as ItemClass ,project as ProjectClass,toDoItemHandler,projectHandler};
 
 
