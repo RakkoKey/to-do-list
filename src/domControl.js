@@ -13,6 +13,21 @@ const closeModalBtn = document.querySelector(".btn-close");
 //         this.toDoListItems = [];
 //     }
 // }
+const resetContent = function(index){
+    var divToReset = document.querySelector(`.project[projectnum="${index}"]`);
+    
+    while(divToReset.lastChild){
+        if(divToReset.firstChild.getAttribute("id") == "edit"){
+            divToReset.firstChild.removeEventListener('click', edit);
+        }
+        else if(divToReset.firstChild.getAttribute("id") == "delete"){
+            divToReset.firstChild.removeEventListener('click', del);
+        }
+        divToReset.firstChild.remove();
+    }
+    divToReset.remove();
+}
+
 
 
 const openModal = function () {
@@ -45,14 +60,20 @@ const editFunc = function(project, i){
         
     })
 }
-const deleteFunc = function(project, i){
+const deleteFunc = function(project, i, projectNum){
     project.removeItemFromProject(project, i);
-    console.log( project.tasks);
+    console.log(project.tasks);
     project.tasksDom[i].remove();
-    console.log(project.tasksDom);
+    //delete project.tasksDom[i];
+    project.tasksDom = [];
+    //console.log(project.tasksDom);
+
+    resetContent(projectNum)
+    var newProjectDiv = createProjectDiv(project,projectNum)
+    contentDiv.appendChild(newProjectDiv);
 }
 
-const createProjectDiv = function(project){
+const createProjectDiv = function(project, projectNum){
     //stores project info
     var projectDiv = document.createElement('div');
     projectDiv.classList.add("project");
@@ -64,6 +85,7 @@ const createProjectDiv = function(project){
     projectTitle.innerHTML = project.getTitle();
     //load tasks
     projectDiv.appendChild(projectTitle);
+    
     for(let i = 0; i < project.tasks.length; i++){
         var newTaskElement = document.createElement('div');
         var newTaskTitle = document.createElement('h4');
@@ -82,7 +104,7 @@ const createProjectDiv = function(project){
         var editButton = document.createElement('button');
         editButton.setAttribute('id', "edit");
         editButton.innerHTML = "Edit";
-        editButton.addEventListener('click', function(){
+        editButton.addEventListener('click', function edit(){
             
             editFunc(project, i);
         })
@@ -93,7 +115,7 @@ const createProjectDiv = function(project){
         deleteButton.setAttribute('id', 'delete');
         deleteButton.innerHTML = "Delete";
         deleteButton.addEventListener('click', function(){
-            deleteFunc(project, i);
+            deleteFunc(project, i, projectNum);
         })
 
 
@@ -114,10 +136,11 @@ const createProjectDiv = function(project){
         project.tasksDom.push(newTaskElement);
         
         projectDiv.appendChild(newTaskElement);
-        console.log(project.tasksDom);
+        projectDiv.setAttribute("projectNum", projectNum);
+        
     }
     
-
+    console.log(project.tasksDom);
     return projectDiv;
 }
 
@@ -131,7 +154,8 @@ const toDoListUIHandler = (function(){
             return;
         }
         for(let i = 0; i < numProjects; i++){
-            var newProjectDiv = createProjectDiv(projectList[i]);
+            var newProjectDiv = createProjectDiv(projectList[i], i + 1);
+            
             contentDiv.appendChild(newProjectDiv);
         }
         

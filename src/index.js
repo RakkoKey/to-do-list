@@ -74,7 +74,8 @@ class project{
     }
 
     removeItemFromProject(project, i){
-        delete project.tasks[i];
+        //delete project.tasks[i];
+        project.tasks.splice(i, 1);
     }
 
     addItemToProject( title, description, dueDate, priority){
