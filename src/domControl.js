@@ -18,9 +18,11 @@ const resetContent = function(index){
         else if(divToReset.firstChild.getAttribute("id") == "delete"){
             divToReset.firstChild.removeEventListener('click', del);
         }
+        else if(divToReset.firstChild.getAttribute("id") == "complete"){
+            divToReset.firstChild.removeEventListener('click', check);
+        }
         divToReset.firstChild.remove();
     }
-    divToReset.remove();
 }
 
 
@@ -64,14 +66,78 @@ const deleteFunc = function(project, i, projectNum){
     //console.log(project.tasksDom);
 
     resetContent(projectNum)
-    var newProjectDiv = createProjectDiv(project,projectNum)
-    contentDiv.appendChild(newProjectDiv);
+    loadTasks(project,projectNum);
+    
 }
+
 const completeFunc = function(task){
     task.setCompleted(true);
     console.log(task);
 }
-
+const loadTasks = function(project, index){
+    var projectDiv = document.querySelector(`.project[projectnum="${index}"]`);
+    var projectTitle = document.createElement('h2');
+    projectTitle.innerHTML = project.getTitle();
+    //load tasks
+    projectDiv.appendChild(projectTitle);
+    for(let i = 0; i < project.tasks.length; i++){
+        
+            var newTaskElement = document.createElement('div');
+            var newTaskTitle = document.createElement('h4');
+            var newTaskDescription = document.createElement('p');
+            var newTaskDueDate = document.createElement('h3');
+    
+            newTaskTitle.innerHTML = project.tasks[i].getTitle();
+            newTaskDescription.innerHTML = project.tasks[i].getDescription();
+            newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
+    
+            //create buttons
+            var buttonDiv = document.createElement('div');
+            buttonDiv.setAttribute('id', "toDoButtons");
+    
+    
+            var editButton = document.createElement('button');
+            editButton.setAttribute('id', "edit");
+            editButton.innerHTML = "Edit";
+            editButton.addEventListener('click', function edit(){
+                
+                editFunc(project, i);
+            })
+    
+    
+    
+            var deleteButton = document.createElement('button');
+            deleteButton.setAttribute('id', 'delete');
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener('click', function(){
+                deleteFunc(project, i, index);
+            })
+    
+    
+    
+            var completeButton = document.createElement('button');
+            completeButton.setAttribute('id', "complete");
+            completeButton.innerHTML = "Complete";
+            completeButton.addEventListener('click', function check(){
+                completeFunc(project.tasks[i]);
+            })
+    
+    
+            buttonDiv.append(editButton, deleteButton, completeButton);
+    
+    
+    
+    
+            
+            
+            newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate, buttonDiv);
+            project.tasksDom.push(newTaskElement);
+            
+            projectDiv.appendChild(newTaskElement);
+            
+        
+    }
+}
 const createProjectDiv = function(project, projectNum){
     //stores project info
     var projectDiv = document.createElement('div');
