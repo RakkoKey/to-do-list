@@ -11,17 +11,21 @@ const closeModalBtn = document.querySelector(".btn-close");
 const resetContent = function(index){
     var divToReset = document.querySelector(`.project[projectnum="${index}"]`);
     
-    while(divToReset.lastChild){
-        if(divToReset.firstChild.getAttribute("id") == "edit"){
-            divToReset.firstChild.removeEventListener('click', edit);
+    while(divToReset.lastChild.className != "projectTitle"){
+        
+        if(divToReset.lastChild.getAttribute("id") == "edit"  ){
+            divToReset.lastChild.removeEventListener('click', edit);
         }
-        else if(divToReset.firstChild.getAttribute("id") == "delete"){
-            divToReset.firstChild.removeEventListener('click', del);
+        else if(divToReset.lastChild.getAttribute("id") == "delete"){
+            divToReset.lastChild.removeEventListener('click', del);
         }
-        else if(divToReset.firstChild.getAttribute("id") == "complete"){
-            divToReset.firstChild.removeEventListener('click', check);
+        else if(divToReset.lastChild.getAttribute("id") == "complete"){
+            divToReset.lastChild.removeEventListener('click', check);
         }
-        divToReset.firstChild.remove();
+        
+        divToReset.lastChild.remove();
+        
+        
     }
 }
 
@@ -66,7 +70,8 @@ const deleteFunc = function(project, i, projectNum){
     //console.log(project.tasksDom);
 
     resetContent(projectNum)
-    loadTasks(project,projectNum);
+    var projectDiv = document.querySelector(`.project[projectnum="${projectNum}"]`);
+    loadTasks(project,projectNum, projectDiv);
     
 }
 
@@ -74,12 +79,9 @@ const completeFunc = function(task){
     task.setCompleted(true);
     console.log(task);
 }
-const loadTasks = function(project, index){
-    var projectDiv = document.querySelector(`.project[projectnum="${index}"]`);
-    var projectTitle = document.createElement('h2');
-    projectTitle.innerHTML = project.getTitle();
-    //load tasks
-    projectDiv.appendChild(projectTitle);
+const loadTasks = function(project, index, projectDiv){
+    
+    
     for(let i = 0; i < project.tasks.length; i++){
         
             var newTaskElement = document.createElement('div');
@@ -110,7 +112,7 @@ const loadTasks = function(project, index){
             deleteButton.setAttribute('id', 'delete');
             deleteButton.innerHTML = "Delete";
             deleteButton.addEventListener('click', function(){
-                deleteFunc(project, i, index);
+                deleteFunc(project, i, index); //look i may of renamed projectNum to index but it's fine
             })
     
     
@@ -148,66 +150,13 @@ const createProjectDiv = function(project, projectNum){
     
     var projectTitle = document.createElement('h2');
     projectTitle.innerHTML = project.getTitle();
+    projectTitle.classList.add("projectTitle");
     //load tasks
     projectDiv.appendChild(projectTitle);
     
-    for(let i = 0; i < project.tasks.length; i++){
-        var newTaskElement = document.createElement('div');
-        var newTaskTitle = document.createElement('h4');
-        var newTaskDescription = document.createElement('p');
-        var newTaskDueDate = document.createElement('h3');
-
-        newTaskTitle.innerHTML = project.tasks[i].getTitle();
-        newTaskDescription.innerHTML = project.tasks[i].getDescription();
-        newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
-
-        //create buttons
-        var buttonDiv = document.createElement('div');
-        buttonDiv.setAttribute('id', "toDoButtons");
-
-
-        var editButton = document.createElement('button');
-        editButton.setAttribute('id', "edit");
-        editButton.innerHTML = "Edit";
-        editButton.addEventListener('click', function edit(){
-            
-            editFunc(project, i);
-        })
-
-
-
-        var deleteButton = document.createElement('button');
-        deleteButton.setAttribute('id', 'delete');
-        deleteButton.innerHTML = "Delete";
-        deleteButton.addEventListener('click', function(){
-            deleteFunc(project, i, projectNum);
-        })
-
-
-
-        var completeButton = document.createElement('button');
-        completeButton.setAttribute('id', "complete");
-        completeButton.innerHTML = "Complete";
-        completeButton.addEventListener('click', function check(){
-            completeFunc(project.tasks[i]);
-        })
-
-
-        buttonDiv.append(editButton, deleteButton, completeButton);
-
-
-
-
+    loadTasks(project, projectNum, projectDiv);
+    projectDiv.setAttribute("projectNum", projectNum);
         
-        
-        newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate, buttonDiv);
-        project.tasksDom.push(newTaskElement);
-        
-        projectDiv.appendChild(newTaskElement);
-        projectDiv.setAttribute("projectNum", projectNum);
-        
-    }
-    
     console.log(project.tasksDom);
     return projectDiv;
 }
