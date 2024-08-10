@@ -7,12 +7,7 @@ const overlay = document.querySelector(".overlay");
 const editForm = document.getElementById('editForm');
 const closeModalBtn = document.querySelector(".btn-close");
 
-// class projectDom extends handler.ProjectClass{
-//     constructor(title){
-//         handler.projectHandler.createNewProject(title);
-//         this.toDoListItems = [];
-//     }
-// }
+
 const resetContent = function(index){
     var divToReset = document.querySelector(`.project[projectnum="${index}"]`);
     
@@ -72,6 +67,10 @@ const deleteFunc = function(project, i, projectNum){
     var newProjectDiv = createProjectDiv(project,projectNum)
     contentDiv.appendChild(newProjectDiv);
 }
+const completeFunc = function(task){
+    task.setCompleted(true);
+    console.log(task);
+}
 
 const createProjectDiv = function(project, projectNum){
     //stores project info
@@ -123,6 +122,9 @@ const createProjectDiv = function(project, projectNum){
         var completeButton = document.createElement('button');
         completeButton.setAttribute('id', "complete");
         completeButton.innerHTML = "Complete";
+        completeButton.addEventListener('click', function check(){
+            completeFunc(project.tasks[i]);
+        })
 
 
         buttonDiv.append(editButton, deleteButton, completeButton);
@@ -163,9 +165,6 @@ const toDoListUIHandler = (function(){
     return {loadProjects};
 })();
 
-const findtoDoItem = function(project, index){
-    return project.tasks[index];
-}
 
 closeModalBtn.addEventListener('click', closeModal);
 
@@ -174,7 +173,11 @@ closeModalBtn.addEventListener('click', closeModal);
 
 //test code
 handler.projectHandler.createNewProject("Test Project Title");
+handler.projectHandler.createNewProject("Another Project");
 var sampleProject = handler.projectHandler.getAllProjects()[0];
+var sampleProject2 = handler.projectHandler.getAllProjects()[1];
 sampleProject.addItemToProject("Test title", "Test description", "Never", 4);
 sampleProject.addItemToProject("Test title 2", "Test description 2", "Never 2", 4);
+
+sampleProject2.addItemToProject("another test", "cool description", "soon?", 3);
 toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());
