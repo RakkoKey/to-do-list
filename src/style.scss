@@ -46,7 +46,9 @@ body{
 
 
 
-
+    .complete{
+        background-color: gray;
+    }
 
     
     .hidden{
@@ -60,12 +62,20 @@ body{
         border-style: solid;
         border-color: red;
         border-width: 3px;
-        h2{
+        .projectTitle{
             font-weight: 900;
+            font-size:24px;
+            //padding:8px;
+            button{
+                vertical-align: top;
+                margin-left: 12px;
+            }
+            
         }
         div{
             border-top-style: dashed;
-            margin:8px;
+            padding:8px;
+            
         }
         #toDoButtons{
             display: flex;

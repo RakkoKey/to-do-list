@@ -75,9 +75,16 @@ const deleteFunc = function(project, i, projectNum){
     
 }
 
-const completeFunc = function(task){
+const completeFunc = function(project, task, index){
     task.setCompleted(true);
     console.log(task);
+    var taskNode = project.tasksDom[index];
+    taskNode.parentNode.appendChild(project.tasksDom[index]);
+    taskNode.classList.toggle("complete");
+    
+   
+    
+
 }
 const loadTasks = function(project, index, projectDiv){
     
@@ -121,7 +128,7 @@ const loadTasks = function(project, index, projectDiv){
             completeButton.setAttribute('id', "complete");
             completeButton.innerHTML = "Complete";
             completeButton.addEventListener('click', function check(){
-                completeFunc(project.tasks[i]);
+                completeFunc(project, project.tasks[i], i);
             })
     
     
@@ -148,13 +155,21 @@ const createProjectDiv = function(project, projectNum){
 
 
     
-    var projectTitle = document.createElement('h2');
+    var projectTitle = document.createElement('div');
     projectTitle.innerHTML = project.getTitle();
     projectTitle.classList.add("projectTitle");
-    //load tasks
+
+    var editTitleButton = document.createElement('button');
+    var backgroundimg = document.createElement('img');
+
+    
+    editTitleButton.appendChild(backgroundimg);
+    projectTitle.appendChild(editTitleButton);
+
     projectDiv.appendChild(projectTitle);
     
     loadTasks(project, projectNum, projectDiv);
+
     projectDiv.setAttribute("projectNum", projectNum);
         
     console.log(project.tasksDom);
