@@ -1,5 +1,6 @@
 import * as handler from "./index.js"
 import "./style.scss";
+import pencil from "./img/pencil-outline.svg";
 
 const contentDiv = document.getElementById('allprojects');
 const modal = document.querySelector(".modal");
@@ -160,10 +161,11 @@ const createProjectDiv = function(project, projectNum){
     projectTitle.classList.add("projectTitle");
 
     var editTitleButton = document.createElement('button');
-    var backgroundimg = document.createElement('img');
+    const icon = new Image();
+    icon.src = pencil;
 
-    
-    editTitleButton.appendChild(backgroundimg);
+
+    editTitleButton.appendChild(icon);
     projectTitle.appendChild(editTitleButton);
 
     projectDiv.appendChild(projectTitle);
