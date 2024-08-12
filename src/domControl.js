@@ -81,7 +81,7 @@ const completeFunc = function(project, task, index){
     console.log(task);
     var taskNode = project.tasksDom[index];
     taskNode.parentNode.appendChild(project.tasksDom[index]);
-    taskNode.classList.toggle("complete");
+    taskNode.parentNode.classList.toggle("complete");
     
    
     
@@ -91,14 +91,25 @@ const loadTasks = function(project, index, projectDiv){
     
     
     for(let i = 0; i < project.tasks.length; i++){
-        
+            var taskBox = document.createElement('div');
+            taskBox.classList.add("taskBox")
+
+            var checkBox= document.createElement('input');
+            checkBox.setAttribute('type', 'checkbox');
+            checkBox.addEventListener('click', function complete(){
+                completeFunc(project, project.tasks[i], i);
+                
+            })
+
+
+            taskBox.appendChild(checkBox)
+
+
             var newTaskElement = document.createElement('div');
             var newTaskTitle = document.createElement('h4');
-            
             var newTaskDueDate = document.createElement('h3');
     
             newTaskTitle.innerHTML = project.tasks[i].getTitle();
-            
             newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
     
             //create buttons
@@ -125,15 +136,15 @@ const loadTasks = function(project, index, projectDiv){
     
     
     
-            var completeButton = document.createElement('button');
-            completeButton.setAttribute('id', "complete");
-            completeButton.innerHTML = "Complete";
-            completeButton.addEventListener('click', function check(){
-                completeFunc(project, project.tasks[i], i);
-            })
+            // var completeButton = document.createElement('button');
+            // completeButton.setAttribute('id', "complete");
+            // completeButton.innerHTML = "Complete";
+            // completeButton.addEventListener('click', function check(){
+            //     completeFunc(project, project.tasks[i], i);
+            // })
     
     
-            buttonDiv.append(editButton, deleteButton, completeButton);
+            buttonDiv.append(editButton, deleteButton);
     
     
     
@@ -141,9 +152,11 @@ const loadTasks = function(project, index, projectDiv){
             
             
             newTaskElement.append(newTaskTitle, newTaskDueDate, buttonDiv);
+            newTaskElement.classList.add("taskItem");
+            taskBox.appendChild(newTaskElement);
             project.tasksDom.push(newTaskElement);
             
-            projectDiv.appendChild(newTaskElement);
+            projectDiv.appendChild(taskBox);
             
         
     }
