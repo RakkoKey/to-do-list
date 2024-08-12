@@ -29,7 +29,10 @@ const resetContent = function(index){
         
     }
 }
+const changeTitle = function(project, newtitle){
+    project.setTitle(newtitle);
 
+}
 
 
 const openModal = function () {
@@ -53,10 +56,7 @@ const editFunc = function(project, i){
             console.log(project.tasks[i]);
             
         }
-        if(data.get("description")){
-            project.tasksDom[i].childNodes[1].innerHTML = data.get("description");
-            project.tasks[i].setDescription(data.get("description"));
-        }
+        
         closeModal();
         this.removeEventListener("submit", onClick);
         
@@ -94,11 +94,11 @@ const loadTasks = function(project, index, projectDiv){
         
             var newTaskElement = document.createElement('div');
             var newTaskTitle = document.createElement('h4');
-            var newTaskDescription = document.createElement('p');
+            
             var newTaskDueDate = document.createElement('h3');
     
             newTaskTitle.innerHTML = project.tasks[i].getTitle();
-            newTaskDescription.innerHTML = project.tasks[i].getDescription();
+            
             newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
     
             //create buttons
@@ -140,7 +140,7 @@ const loadTasks = function(project, index, projectDiv){
     
             
             
-            newTaskElement.append(newTaskTitle, newTaskDescription, newTaskDueDate, buttonDiv);
+            newTaskElement.append(newTaskTitle, newTaskDueDate, buttonDiv);
             project.tasksDom.push(newTaskElement);
             
             projectDiv.appendChild(newTaskElement);
@@ -163,6 +163,9 @@ const createProjectDiv = function(project, projectNum){
     var editTitleButton = document.createElement('button');
     const icon = new Image();
     icon.src = pencil;
+    editTitleButton.addEventListener('click', function title(){
+        changeTitle();
+    })
 
 
     editTitleButton.appendChild(icon);
