@@ -78,9 +78,9 @@ const deleteFunc = function(project, i, projectNum){
 
 const completeFunc = function(project, task, index){
     task.setCompleted(true);
-    console.log(task);
+    console.log(project.tasksDom[index]);
     var taskNode = project.tasksDom[index];
-    taskNode.parentNode.appendChild(project.tasksDom[index]);
+    taskNode.parentNode.parentNode.appendChild(project.tasksDom[index].parentNode);
     taskNode.parentNode.classList.toggle("complete");
     
    
