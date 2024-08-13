@@ -83,7 +83,9 @@ body{
             display:flex;
             flex-direction: row;
             border-top-style: dashed;
-            
+            .dueDate{
+                font-weight: 600;
+            }
             
         }
         #toDoButtons{
