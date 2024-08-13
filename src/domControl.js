@@ -11,6 +11,7 @@ const closeModalBtn = document.querySelectorAll(".btn-close");
 
 const titleModal = document.querySelector(".title");
 const titleForm = document.getElementById("titleForm");
+console.log(editForm);
 
 
 const resetContent = function(index){
@@ -35,7 +36,15 @@ const resetContent = function(index){
 }
 const changeTitle = function(project, projectNum){
     titleForm.addEventListener("submit", function onClick(e){
-        e.preventDefault;
+        e.preventDefault();
+        const data = new FormData(e.target);
+        if(data.get("title")){
+            project.setTitle(data.get("title"));
+            var projectDom = document.querySelector(`.project[projectNum="${projectNum}"]`);
+            projectDom.childNodes[0].childNodes[0].innerHTML = data.get("title");
+        }
+        closeModal(titleModal);
+        this.removeEventListener("submit", onClick);
     })
 
 }
@@ -184,7 +193,9 @@ const createProjectDiv = function(project, projectNum){
 
     
     var projectTitle = document.createElement('div');
-    projectTitle.innerHTML = project.getTitle();
+    var title = document.createElement("div");
+    title.innerHTML = project.getTitle();
+    projectTitle.appendChild(title);
     projectTitle.classList.add("projectTitle");
     
 
