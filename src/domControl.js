@@ -1,12 +1,16 @@
 import * as handler from "./index.js"
 import "./style.scss";
 import pencil from "./img/pencil-outline.svg";
+import {compareAsc, format} from "date-fns";
 
 const contentDiv = document.getElementById('allprojects');
 const modal = document.querySelector(".modal");
 const overlay = document.querySelector(".overlay");
 const editForm = document.getElementById('editForm');
-const closeModalBtn = document.querySelector(".btn-close");
+const closeModalBtn = document.querySelectorAll(".btn-close");
+
+const titleModal = document.querySelector(".title");
+const titleForm = document.getElementById("titleForm");
 
 
 const resetContent = function(index){
@@ -29,23 +33,26 @@ const resetContent = function(index){
         
     }
 }
-const changeTitle = function(project, newtitle){
-    project.setTitle(newtitle);
+const changeTitle = function(project, projectNum){
+    titleForm.addEventListener("submit", function onClick(e){
+        e.preventDefault;
+    })
 
 }
 
 
-const openModal = function () {
+const openModal = function (modal) {
     modal.classList.remove("hidden");
     overlay.classList.remove("hidden");
 };
-const closeModal = function () {
+const closeModal = function (modal) {
     modal.classList.add("hidden");
     overlay.classList.add("hidden");
 };
 
 const editFunc = function(project, i){
-    openModal();
+    openModal(modal);
+    
     editForm.addEventListener("submit", function onClick(e){
         
         e.preventDefault();
@@ -57,7 +64,7 @@ const editFunc = function(project, i){
             
         }
         
-        closeModal();
+        closeModal(modal);
         this.removeEventListener("submit", onClick);
         
     })
@@ -75,6 +82,7 @@ const deleteFunc = function(project, i, projectNum){
     loadTasks(project,projectNum, projectDiv);
     
 }
+
 
 const completeFunc = function(project, task, index){
     task.setCompleted(true);
@@ -107,7 +115,13 @@ const loadTasks = function(project, index, projectDiv){
 
             var newTaskElement = document.createElement('div');
             var newTaskTitle = document.createElement('h4');
-            var newTaskDueDate = document.createElement('h3');
+            var newTaskDueDate = document.createElement('div');
+
+            newTaskDueDate.classList.add("dueDate");
+
+
+
+
     
             newTaskTitle.innerHTML = project.tasks[i].getTitle();
             newTaskDueDate.innerHTML = project.tasks[i].getDueDate();
@@ -172,13 +186,17 @@ const createProjectDiv = function(project, projectNum){
     var projectTitle = document.createElement('div');
     projectTitle.innerHTML = project.getTitle();
     projectTitle.classList.add("projectTitle");
+    
 
     var editTitleButton = document.createElement('button');
     const icon = new Image();
     icon.src = pencil;
+    
     editTitleButton.addEventListener('click', function title(){
-        changeTitle();
+        openModal(titleModal);
+        changeTitle(project, projectNum);
     })
+    
 
 
     editTitleButton.appendChild(icon);
@@ -214,7 +232,11 @@ const toDoListUIHandler = (function(){
 })();
 
 
-closeModalBtn.addEventListener('click', closeModal);
+for(let i = 0; i < closeModalBtn.length; i++){
+    closeModalBtn[i].addEventListener('click', function(){
+        closeModal(closeModalBtn[i].parentNode.parentNode)
+    })
+}
 
 
 
@@ -225,7 +247,7 @@ handler.projectHandler.createNewProject("Another Project");
 var sampleProject = handler.projectHandler.getAllProjects()[0];
 var sampleProject2 = handler.projectHandler.getAllProjects()[1];
 sampleProject.addItemToProject("Test title", "Test description", "Never", 4);
-sampleProject.addItemToProject("Test title 2", "Test description 2", "Never 2", 4);
+sampleProject.addItemToProject("Test title 2", "Test description 2", format(new Date(2024, 10, 30), "MM/dd/yyyy"), 4);
 
 sampleProject2.addItemToProject("another test", "cool description", "soon?", 3);
 toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());
