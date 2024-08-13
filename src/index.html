@@ -13,19 +13,30 @@
 
     <section class="modal hidden">
         <div class="flex">
-            <button class="btn-close">x</button>
+            <button class="btn-close">X</button>
         </div>
 
         <form id="editForm">
             <label for="title">New Title: </label><br>
             <input type="text" id="title" name="title"><br>
-            
-
+            <label for="dueDate">New Due Date: </label><br>
+            <input type="date" id="dueDate" name="dueDate"><br>
             <input type="submit" value="Edit">
         </form>
-
-
     </section>
+
+    <section class="title modal hidden">
+        <div class="flex">
+            <button class="btn-close">X</button>
+        </div>
+
+        <form id="titleForm">
+            <label for="title">New Title: </label><br>
+            <input type="text" id="title" name="title"><br>
+            <input type="submit" value="Edit">
+        </form>
+    </section>
+
     <div class="overlay hidden"></div>
     
 </body>
