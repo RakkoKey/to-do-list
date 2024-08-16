@@ -159,12 +159,7 @@ const loadTasks = function(project, index, projectDiv){
     
     
     
-            // var completeButton = document.createElement('button');
-            // completeButton.setAttribute('id', "complete");
-            // completeButton.innerHTML = "Complete";
-            // completeButton.addEventListener('click', function check(){
-            //     completeFunc(project, project.tasks[i], i);
-            // })
+            
     
     
             buttonDiv.append(editButton, deleteButton);
@@ -219,10 +214,13 @@ const createProjectDiv = function(project, projectNum){
 
     projectDiv.setAttribute("projectNum", projectNum);
         
-    console.log(project.tasksDom);
+    
     return projectDiv;
 }
-
+const createTempProj = function(projectString){
+    var tempProj = new handler.ProjectClass(projectString.projectTitle);
+    return tempProj;
+}
 const toDoListUIHandler = (function(){
     const loadProjects = function(projectList){
         //load a project and all it's todo items
@@ -233,7 +231,8 @@ const toDoListUIHandler = (function(){
             return;
         }
         for(let i = 0; i < numProjects; i++){
-            var newProjectDiv = createProjectDiv(projectList[i], i + 1);
+            var newProject = createTempProj(projectList[i]);
+            var newProjectDiv = createProjectDiv(newProject, i + 1);
             
             contentDiv.appendChild(newProjectDiv);
         }
@@ -253,12 +252,9 @@ for(let i = 0; i < closeModalBtn.length; i++){
 
 
 //test code
-handler.projectHandler.createNewProject("Test Project Title");
-handler.projectHandler.createNewProject("Another Project");
-var sampleProject = handler.projectHandler.getAllProjects()[0];
-var sampleProject2 = handler.projectHandler.getAllProjects()[1];
-sampleProject.addItemToProject("Test title", "Test description", "Never", 4);
-sampleProject.addItemToProject("Test title 2", "Test description 2", format(new Date(2024, 10, 30), "MM/dd/yyyy"), 4);
+handler.projectHandler.createNewProject("Sample Project");
 
-sampleProject2.addItemToProject("another test", "cool description", "soon?", 3);
-toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());
+localStorage.setItem("allProjects", JSON.stringify(handler.projectHandler.getAllProjects()));
+console.log(localStorage.getItem("allProjects"));
+console.log(handler.projectHandler.getAllProjects());
+toDoListUIHandler.loadProjects(JSON.parse(localStorage.getItem("allProjects")));
