@@ -219,6 +219,13 @@ const createProjectDiv = function(project, projectNum){
 }
 const createTempProj = function(projectString){
     var tempProj = new handler.ProjectClass(projectString.projectTitle);
+    if(projectString.tasks){
+        for(let i = 0; i < projectString.tasks.length; i++){
+            var task = projectString.tasks[i];
+            tempProj.addItemToProject(task.title, task.dueDate, task.priority);
+        }
+    }
+
     return tempProj;
 }
 const toDoListUIHandler = (function(){
@@ -253,6 +260,8 @@ for(let i = 0; i < closeModalBtn.length; i++){
 
 //test code
 handler.projectHandler.createNewProject("Sample Project");
+var testProj = handler.projectHandler.getAllProjects()[0];
+testProj.addItemToProject("Test title 1", format(new Date(2024, 10, 30), "MM/dd/yyyy"), 4)
 
 localStorage.setItem("allProjects", JSON.stringify(handler.projectHandler.getAllProjects()));
 console.log(localStorage.getItem("allProjects"));

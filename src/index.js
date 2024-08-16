@@ -2,9 +2,9 @@
 
 class toDoItem{
     
-    constructor(title, description, dueDate, priority){
+    constructor(title,  dueDate, priority){
         this.title = title;
-        this.description = description;
+        
         this.dueDate = dueDate;
         this.priority = priority;
         this.isDone = false;
@@ -19,13 +19,6 @@ class toDoItem{
         this.title = newTitle;
     }
     
-    getDescription(){
-        return this.description;
-    }
-    setDescription(newDesc){
-        this.description = newDesc;
-    }
-
     getDueDate(){
         return this.dueDate;
     }
@@ -44,7 +37,7 @@ class toDoItem{
 
     printItem(){
         console.log(this.title);
-        console.log(this.description);
+        
         console.log("Due Date: " + this.dueDate);
 
     }
@@ -78,8 +71,8 @@ class project{
         project.tasks.splice(i, 1);
     }
 
-    addItemToProject( title, description, dueDate, priority){
-        var newItem = new toDoItem(title, description, dueDate, priority);
+    addItemToProject( title, dueDate, priority){
+        var newItem = new toDoItem(title, dueDate, priority);
         this.addTask(newItem);
     }
 
