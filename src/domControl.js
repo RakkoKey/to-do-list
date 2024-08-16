@@ -11,7 +11,22 @@ const closeModalBtn = document.querySelectorAll(".btn-close");
 
 const titleModal = document.querySelector(".title");
 const titleForm = document.getElementById("titleForm");
-console.log(editForm);
+
+const newProjButton = document.getElementById("newProject");
+const projModal = document.querySelector(".project");
+const projForm = document.getElementById("projForm");
+
+
+newProjButton.addEventListener("click", function(){
+    openModal(projModal);
+    projForm.addEventListener("submit",function onClick(e){
+        e.preventDefault();
+        const data = new FormData(e.target);
+
+    })
+})
+
+
 
 
 const resetContent = function(index){
@@ -25,9 +40,7 @@ const resetContent = function(index){
         else if(divToReset.lastChild.getAttribute("id") == "delete"){
             divToReset.lastChild.removeEventListener('click', del);
         }
-        else if(divToReset.lastChild.getAttribute("id") == "complete"){
-            divToReset.lastChild.removeEventListener('click', check);
-        }
+    
         
         divToReset.lastChild.remove();
         
@@ -235,6 +248,7 @@ const toDoListUIHandler = (function(){
         console.log(numProjects);
         if(numProjects == 0){
             contentDiv.innerHTML = "There are no projects at this time";
+            
             return;
         }
         for(let i = 0; i < numProjects; i++){

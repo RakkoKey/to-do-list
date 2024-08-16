@@ -8,7 +8,7 @@
 <body>
     <h1>To do</h1>
     <div id="allprojects">
-
+        <button id="newProject">+</button>
     </div>
 
     <section class="modal hidden">
@@ -36,6 +36,25 @@
             <input type="submit" value="Edit">
         </form>
     </section>
+
+    <section class="project modal hidden">
+        <div class="flex">
+            <button class="btn-close">X</button>
+        </div>
+
+        <form id="projForm">
+            <label for="title">Project Title: </label><br>
+            <input type="text" id="title" name="title"><br>
+            <label for="dueDate">Due Date: </label><br>
+            <input type="date" id="dueDate" name="dueDate"><br>
+            <label for="priority">Priority </label><br>
+            <input type="number" id="priority" name="priority"><br>
+
+            <input type="submit" value="Create">
+        </form>
+    </section>
+
+
 
     <div class="overlay hidden"></div>
     
