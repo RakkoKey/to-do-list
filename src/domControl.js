@@ -2,6 +2,7 @@ import * as handler from "./index.js"
 import "./style.scss";
 import pencil from "./img/pencil-outline.svg";
 import {compareAsc, format} from "date-fns";
+import trash from "./img/delete-svgrepo-com.svg";
 
 const contentDiv = document.getElementById('allprojects');
 const modal = document.querySelector(".modal");
@@ -66,7 +67,11 @@ const changeTitle = function(project, projectNum){
     })
 
 }
-
+const deleteProject = function(project, projectNum){
+    handler.projectHandler.deleteProject(projectNum - 1);
+    var projecttoDelete = document.querySelector(`.project[projectNum="${projectNum}"]`);
+    projecttoDelete.remove();
+}
 
 const openModal = function (modal) {
     modal.classList.remove("hidden");
@@ -215,16 +220,30 @@ const createProjectDiv = function(project, projectNum){
     var editTitleButton = document.createElement('button');
     const icon = new Image();
     icon.src = pencil;
+
+    var deleteProjectButton = document.createElement('button');
+    const icon2 = new Image()
+    icon2.src = trash;
     
     editTitleButton.addEventListener('click', function title(){
         openModal(titleModal);
         changeTitle(project, projectNum);
     })
+
+    deleteProjectButton.addEventListener('click', function del(){
+        deleteProject(project, projectNum);
+    })
+
+
+
     
 
-
     editTitleButton.appendChild(icon);
+
+    deleteProjectButton.appendChild(icon2);
+
     projectTitle.appendChild(editTitleButton);
+    projectTitle.appendChild(deleteProjectButton);
 
     projectDiv.appendChild(projectTitle);
     
