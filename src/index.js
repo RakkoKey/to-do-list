@@ -100,6 +100,9 @@ const projectHandler = (function(){
     const createNewProject = function(title){
         var newproj = new project(title);
         projects.push(newproj);
+        localStorage.setItem("allProjects", JSON.stringify(projects));
+        console.log(JSON.stringify(localStorage.getItem("allProjects")))
+        
         return newproj;
     }
 

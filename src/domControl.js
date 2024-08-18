@@ -24,7 +24,7 @@ newProjButton.addEventListener("click", function(){
         const data = new FormData(e.target);
         if(data.get("title")){
             var newproj = handler.projectHandler.createNewProject(data.get("title"));
-            localStorage.setItem("allProjects", JSON.stringify(handler.projectHandler.getAllProjects()));
+            
             toDoListUIHandler.addProject(newproj);
         }
 
@@ -240,6 +240,7 @@ const createTempProj = function(projectString){
     if(projectString.tasks){
         for(let i = 0; i < projectString.tasks.length; i++){
             var task = projectString.tasks[i];
+            
             tempProj.addItemToProject(task.title, task.dueDate, task.priority);
         }
     }
@@ -250,6 +251,7 @@ const toDoListUIHandler = (function(){
     const loadProjects = function(projectList){
         //load a project and all it's todo items
         var numProjects = projectList.length;
+        console.log(projectList);
         console.log(numProjects);
         if(numProjects == 0){
             contentDiv.innerHTML = "There are no projects at this time";
@@ -266,7 +268,7 @@ const toDoListUIHandler = (function(){
     }
     const addProject = function(project){
         var newProject = createTempProj(project);
-        var newProjectDiv = createProjectDiv(newProject,handler.projectHandler.getAllProjects().length + 1 );
+        var newProjectDiv = createProjectDiv(newProject, handler.projectHandler.getAllProjects().length);
             
         contentDiv.appendChild(newProjectDiv);
     }
@@ -284,11 +286,28 @@ for(let i = 0; i < closeModalBtn.length; i++){
 
 
 //test code
-handler.projectHandler.createNewProject("Sample Project");
-var testProj = handler.projectHandler.getAllProjects()[0];
-testProj.addItemToProject("Test title 1", format(new Date(2024, 10, 30), "MM/dd/yyyy"), 4)
 
-localStorage.setItem("allProjects", JSON.stringify(handler.projectHandler.getAllProjects()));
+//update projects array from localStorage
+var savedProjects = JSON.parse(localStorage.getItem("allProjects"));
+console.log(savedProjects);
+for(let i = 0 ; i < savedProjects.length; i++ ){
+    var newproj = handler.projectHandler.createNewProject(savedProjects[i].projectTitle);
+    for(let j = 0; j < savedProjects[i].tasks.length; j++){
+        
+        
+        newproj.addItemToProject(savedProjects[i].tasks[j].title, savedProjects[i].tasks[j].dueDate, savedProjects[i].tasks[j].priority);
+    }
+}
+
+
+// var testProj = handler.projectHandler.getAllProjects()[0];
+// testProj.addItemToProject("Test title 1", format(new Date(2024, 10, 30), "MM/dd/yyyy"), 4)
+
+
 console.log(localStorage.getItem("allProjects"));
-console.log(handler.projectHandler.getAllProjects());
-toDoListUIHandler.loadProjects(JSON.parse(localStorage.getItem("allProjects")));
+
+
+
+toDoListUIHandler.loadProjects(handler.projectHandler.getAllProjects());
+console.log(JSON.parse(localStorage.getItem("allProjects")).length);
+//localStorage.setItem("allProjects", JSON.stringify(handler.projectHandler.getAllProjects()));
