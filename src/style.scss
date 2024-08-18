@@ -65,6 +65,8 @@ body{
         .projectTitle{
             font-weight: 900;
             font-size:24px;
+            display: flex;
+            flex-direction: row;
             //padding:8px;
             button{
                 vertical-align: top;
