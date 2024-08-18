@@ -111,7 +111,12 @@ const projectHandler = (function(){
         return this.projects;
     }
 
-    return{projects, getAllProjects, createNewProject}
+    const deleteProject = function(index){
+        projects.splice(index, 1)
+        localStorage.setItem("allProjects", JSON.stringify(projects));
+    }
+
+    return{projects,deleteProject, getAllProjects, createNewProject}
 })();
 
 
