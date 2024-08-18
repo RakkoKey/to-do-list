@@ -22,6 +22,11 @@ newProjButton.addEventListener("click", function(){
     projForm.addEventListener("submit",function onClick(e){
         e.preventDefault();
         const data = new FormData(e.target);
+        if(data.get("title")){
+            var newproj = handler.projectHandler.createNewProject(data.get("title"));
+            localStorage.setItem("allProjects", JSON.stringify(handler.projectHandler.getAllProjects()));
+            toDoListUIHandler.addProject(newproj);
+        }
 
     })
 })
@@ -259,7 +264,13 @@ const toDoListUIHandler = (function(){
         }
         
     }
-    return {loadProjects};
+    const addProject = function(project){
+        var newProject = createTempProj(project);
+        var newProjectDiv = createProjectDiv(newProject,handler.projectHandler.getAllProjects().length + 1 );
+            
+        contentDiv.appendChild(newProjectDiv);
+    }
+    return {loadProjects, addProject};
 })();
 
 

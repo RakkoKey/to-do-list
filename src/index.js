@@ -98,7 +98,9 @@ const projectHandler = (function(){
     const projects = [];
     
     const createNewProject = function(title){
-        projects.push(new project(title));
+        var newproj = new project(title);
+        projects.push(newproj);
+        return newproj;
     }
 
 
