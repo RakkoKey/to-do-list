@@ -28,6 +28,8 @@ newProjButton.addEventListener("click", function(){
             
             toDoListUIHandler.addProject(newproj);
         }
+        closeModal(projModal);
+        this.removeEventListener("submit", onClick);
 
     })
 })
@@ -273,7 +275,8 @@ const toDoListUIHandler = (function(){
         console.log(projectList);
         console.log(numProjects);
         if(numProjects == 0){
-            contentDiv.innerHTML = "There are no projects at this time";
+            contentDiv.appendChild("There are no projects at this time");
+            contentDiv.appendChild(newProjButton);
             
             return;
         }
