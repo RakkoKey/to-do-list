@@ -96,7 +96,6 @@ const editFunc = function(project, i){
             project.tasksDom[i].childNodes[0].innerHTML = data.get("title");
             project.tasks[i].setTitle(data.get("title"));
             console.log(project.tasks[i]);
-            
         }
         
         closeModal(modal);
@@ -117,8 +116,20 @@ const deleteFunc = function(project, i, projectNum){
     loadTasks(project,projectNum, projectDiv);
     
 }
+const addTask = function(project, i, projectNum){
+    
+    openModal(modal);
+    editForm.addEventListener("submit", function onClick(e){
+        e.preventDefault();
+        if(data.get("title") && data.get("dueDate")){
+            //first create task inside program logic
 
-
+            //then create task inside the taskDom
+            
+            
+        }
+    })
+}
 const completeFunc = function(project, task, index){
     task.setCompleted(true);
     console.log(project.tasksDom[index]);
@@ -137,7 +148,7 @@ const loadTasks = function(project, index, projectDiv){
             var taskBox = document.createElement('div');
             taskBox.classList.add("taskBox")
 
-            var checkBox= document.createElement('input');
+            var checkBox = document.createElement('input');
             checkBox.setAttribute('type', 'checkbox');
             checkBox.addEventListener('click', function complete(){
                 completeFunc(project, project.tasks[i], i);
@@ -239,6 +250,10 @@ const createProjectDiv = function(project, projectNum){
 
     deleteProjectButton.addEventListener('click', function del(){
         deleteProject(project, projectNum);
+    })
+
+    addTaskButton.addEventListener('click', function add(){
+        addTask();
     })
 
 
