@@ -3,6 +3,7 @@ import "./style.scss";
 import pencil from "./img/pencil-outline.svg";
 import {compareAsc, format} from "date-fns";
 import trash from "./img/delete-svgrepo-com.svg";
+import plus  from "./img/plus-large-svgrepo-com.svg";
 
 const contentDiv = document.getElementById('allprojects');
 const modal = document.querySelector(".modal");
@@ -224,8 +225,12 @@ const createProjectDiv = function(project, projectNum){
     icon.src = pencil;
 
     var deleteProjectButton = document.createElement('button');
-    const icon2 = new Image()
+    const icon2 = new Image();
     icon2.src = trash;
+
+    var addTaskButton = document.createElement('button');
+    const icon3 = new Image();
+    icon3.src = plus;
     
     editTitleButton.addEventListener('click', function title(){
         openModal(titleModal);
@@ -241,11 +246,12 @@ const createProjectDiv = function(project, projectNum){
     
 
     editTitleButton.appendChild(icon);
-
     deleteProjectButton.appendChild(icon2);
+    addTaskButton.appendChild(icon3);
 
     projectTitle.appendChild(editTitleButton);
     projectTitle.appendChild(deleteProjectButton);
+    projectTitle.appendChild(addTaskButton);
 
     projectDiv.appendChild(projectTitle);
     
