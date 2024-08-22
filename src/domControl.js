@@ -116,16 +116,90 @@ const deleteFunc = function(project, i, projectNum){
     loadTasks(project,projectNum, projectDiv);
     
 }
-const addTask = function(project, i, projectNum){
+const addTask = function(project, projectNum){
     
     openModal(modal);
     editForm.addEventListener("submit", function onClick(e){
         e.preventDefault();
+        const data = new FormData(e.target);
         if(data.get("title") && data.get("dueDate")){
             //first create task inside program logic
+            project.addItemToProject(data.get("title"), data.get("dueDate"), 2);
+            var newTaskIndex = project.tasks.length - 1;
+
+
 
             //then create task inside the taskDom
+            var taskBox = document.createElement('div');
+            taskBox.classList.add("taskBox")
+
+            var checkBox = document.createElement('input');
+            checkBox.setAttribute('type', 'checkbox');
+            checkBox.addEventListener('click', function complete(){
+                completeFunc(project, project.tasks[newTaskIndex], newTaskIndex);
+                
+            })
+
+
+            taskBox.appendChild(checkBox)
+
+
+            var newTaskElement = document.createElement('div');
+
+            var newTaskTitle = document.createElement('h4');
+            var newTaskDueDate = document.createElement('div');
+
+            newTaskDueDate.classList.add("dueDate");
+
+
+
+
+    
+            newTaskTitle.innerHTML = data.get("title");
+            newTaskDueDate.innerHTML = data.get("dueDate");
+
+    
+            //create buttons
+            var buttonDiv = document.createElement('div');
+            buttonDiv.setAttribute('id', "toDoButtons");
+    
+    
+            var editButton = document.createElement('button');
+            editButton.setAttribute('id', "edit");
+            editButton.innerHTML = "Edit";
+            editButton.addEventListener('click', function edit(){
+                
+                editFunc(project, newTaskIndex);
+            })
+    
+    
+    
+            var deleteButton = document.createElement('button');
+            deleteButton.setAttribute('id', 'delete');
+            deleteButton.innerHTML = "Delete";
+            deleteButton.addEventListener('click', function(){
+                deleteFunc(project, newTaskIndex, projectNum); 
+            })
+    
+    
+    
             
+    
+    
+            buttonDiv.append(editButton, deleteButton);
+    
+    
+    
+    
+            
+            
+            newTaskElement.append(newTaskTitle, newTaskDueDate, buttonDiv);
+            newTaskElement.classList.add("taskItem");
+            taskBox.appendChild(newTaskElement);
+            project.tasksDom.push(newTaskElement);
+            var projectDiv = document.querySelector(`.project[projectNum="${projectNum}"]`);
+            console.log(projectNum);
+            projectDiv.appendChild(taskBox);
             
         }
     })
@@ -253,7 +327,7 @@ const createProjectDiv = function(project, projectNum){
     })
 
     addTaskButton.addEventListener('click', function add(){
-        addTask();
+        addTask(project, projectNum);
     })
 
 
