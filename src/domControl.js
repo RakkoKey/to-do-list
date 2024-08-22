@@ -29,6 +29,7 @@ newProjButton.addEventListener("click", function(){
             
             toDoListUIHandler.addProject(newproj);
         }
+        
         closeModal(projModal);
         this.removeEventListener("submit", onClick);
 
@@ -128,7 +129,7 @@ const addTask = function(project, projectNum){
             var newTaskIndex = project.tasks.length - 1;
 
 
-
+            
             //then create task inside the taskDom
             var taskBox = document.createElement('div');
             taskBox.classList.add("taskBox")
@@ -202,7 +203,10 @@ const addTask = function(project, projectNum){
             projectDiv.appendChild(taskBox);
             
         }
+        this.removeEventListener('submit',onClick);
+        closeModal(modal);
     })
+    
 }
 const completeFunc = function(project, task, index){
     task.setCompleted(true);
